@@ -1,8 +1,5 @@
 <?php
 
-use srvices\DB;
+use services\DB;
 
 require "api/services/DB.php";
-
-var_dump(new DB());
-exit();

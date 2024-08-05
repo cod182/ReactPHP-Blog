@@ -1,6 +1,6 @@
 <?php
 
-namespace srvices;
+namespace services;
 
 use mysqli;
 
