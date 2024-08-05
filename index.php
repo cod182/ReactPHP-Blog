@@ -1,5 +1,13 @@
 <?php
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
+require 'api/services/DB.php';
 
 use services\DB;
 
-require "api/services/DB.php";
+require "api/controllers/PostsController.php";
+
+use Api\controllers\PostsController;
+
+(new PostsController)->getPosts();
