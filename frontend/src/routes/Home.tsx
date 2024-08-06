@@ -1,14 +1,10 @@
 import { useEffect, useState } from "react"
 
 import ReactPaginate from 'react-paginate';
+import { PostProp } from '../../types/types';
+import { Posts } from "../components";
 
-type PostProp = {
-  id: number;
-  user_id: number;
-  title: string;
-  content: string;
-  image: string;
-}
+
 
 const Home = () => {
 
@@ -18,7 +14,7 @@ const Home = () => {
 
   const [offset, setOffset] = useState(0)
   const [pageSize, setPageSize] = useState(10)
-  console.log(posts);
+
 
 
   // UseEffects
@@ -38,17 +34,17 @@ const Home = () => {
   // Invoke when user click to request another page.
   const handlePageClick = (event: any) => {
     const newOffset = (event.selected);
-    console.log(
-      `User requested page number ${event.selected}, which is offset ${newOffset}`
-    );
+
     setOffset(newOffset);
   };
 
   if (totalPosts >= 1 && posts) {
-    console.log(Math.ceil(totalPosts / pageSize))
 
     return (
-      <div className="">
+      <div className="flex flex-col items-center justify-center gap-4">
+        <h1 className="w-full px-2 py-4 text-4xl font-bold underline">Latest Posts</h1>
+        <Posts posts={posts} />
+
         <div className="">
           <ReactPaginate
             breakLabel="..."
