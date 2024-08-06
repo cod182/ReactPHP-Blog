@@ -52,14 +52,18 @@ const Home = () => {
 
   // RETURNS
 
-  if (!loading) {
-    return <Loading />
+  if (loading) {
+    return (
+      <div className="h-[calc(100svh-80px)] w-full">
+        <Loading />
+      </div>
+    )
   }
 
   if (fetchError || totalPosts <= 0 || posts) {
 
     return (
-      <div className="flex flex-col items-center justify-center w-full h-[100svh] gap-5 grow">
+      <div className="flex flex-col items-center justify-center w-full h-[calc(100svh-80px)]  gap-5 grow">
         <h2>An Error Has Ocurred</h2>
         <p>Please try again.</p>
       </div>
