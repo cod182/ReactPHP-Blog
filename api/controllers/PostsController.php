@@ -2,6 +2,7 @@
 
 namespace Api\controllers;
 
+use mysqli;
 use services\DB;
 
 class PostsController
@@ -122,5 +123,46 @@ class PostsController
     // Close statement and connection
     $stmt->close();
     $this->conn->close();
+  }
+
+  public function getPostsFromDatabase()
+  {
+    try {
+      // Headers
+      header("Access-Control-Allow-Origin: *");
+      header("Access-Control-Allow-Headers: *");
+
+
+      $perPage = isset($_GET['limit']) ? (int)$_GET['limit'] : 5;
+      $pageNumber = $_GET['offset'] ?? 0;
+      $postsArray = [];
+
+
+      // SQL to get the total number of posts
+      $sql = "SELECT * FROM posts";
+      $totalPosts = mysqli_num_rows(mysqli_query($this->conn, $sql));
+
+      // SQL to get the paginated results
+      $sql = "SELECT * FROM posts ORDER BY id LIMIT $perPage OFFSET $pageNumber";
+      $response = mysqli_query($this->conn, $sql);
+
+      if ($response) {
+        while ($row = mysqli_fetch_assoc($response)) {
+          $postsArray['posts'][] = $row;
+        }
+      } else {
+        echo "Error: " . $sql . "<br/>" . mysqli_error($this->conn);
+      }
+
+      $postsArray['count'] = $totalPosts;
+      // Close connection
+      mysqli_close($this->conn);
+
+      echo json_encode($postsArray, JSON_PRETTY_PRINT);
+
+      // return json_encode($postsArray, JSON_PRETTY_PRINT);
+    } catch (\Exception $e) {
+      //throw $th;
+    }
   }
 }
