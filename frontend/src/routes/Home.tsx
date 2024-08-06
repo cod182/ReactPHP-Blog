@@ -9,13 +9,6 @@ type PostProp = {
 
 const Home = () => {
 
-  // Declarations
-
-  const publicUrl = process.env.REACT_APP_PUBLIC_URL;
-  const databaseName = process.env.REACT_APP_DBNAME;
-
-  console.log(publicUrl);
-
   // UseStates
   const [totalPosts, setTotalPosts] = useState<number>()
   const [posts, setPosts] = useState<PostProp[]>()
@@ -33,7 +26,7 @@ const Home = () => {
   // Functions
   const fetchPosts = async (pageSize: number, offset: number) => {
     const res = await fetch(
-      `${publicUrl}/${databaseName}/api/posts`
+      `${process.env.REACT_APP_PUBLIC_URL}/${process.env.REACT_APP_DBNAME}/api/posts?limit=${pageSize}&offset=${offset}`
     )
     console.log(res)
     return await res.json();
