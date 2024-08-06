@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 
 import ReactPaginate from 'react-paginate';
 import { PostProp } from '../../types/types';
-import { Posts } from "../components";
+import { Loading, Posts } from "../components";
 
 
 
@@ -15,20 +15,31 @@ const Home = () => {
   const [offset, setOffset] = useState(0)
   const [pageSize, setPageSize] = useState(10)
 
+  const [fetchError, setFetchError] = useState(false)
+  const [loading, setLoading] = useState(true);
+
 
 
   // UseEffects
   useEffect(() => {
-    fetchPosts(pageSize, offset).then((posts) => {
-      setTotalPosts(posts.count);
-      setPosts(posts.posts);
-    })
+    fetchPosts(pageSize, offset)
   }, [offset, pageSize])
 
   // Functions
   const fetchPosts = async (pageSize: number, offset: number) => {
-    const res = await fetch(`${process.env.REACT_APP_PUBLIC_URL}/api/posts?limit=${pageSize}&offset=${offset}`)
-    return await res.json();
+    try {
+      setLoading(true);
+      setFetchError(false);
+      const res = await fetch(`${process.env.REACT_APP_PUBLIC_URL}/api/posts?limit=${pageSize}&offset=${offset}`)
+      const posts = await res.json();
+      setTotalPosts(posts.count);
+      setPosts(posts.posts);
+      setLoading(false);
+    } catch (error) {
+      setLoading(false);
+      console.log(error);
+      setFetchError(true);
+    }
   }
 
   // Invoke when user click to request another page.
@@ -38,8 +49,24 @@ const Home = () => {
     setOffset(newOffset);
   };
 
-  if (totalPosts >= 1 && posts) {
 
+  // RETURNS
+
+  if (!loading) {
+    return <Loading />
+  }
+
+  if (fetchError || totalPosts <= 0 || posts) {
+
+    return (
+      <div className="flex flex-col items-center justify-center w-full h-[100svh] gap-5 grow">
+        <h2>An Error Has Ocurred</h2>
+        <p>Please try again.</p>
+      </div>
+    );
+  }
+
+  if (totalPosts >= 1 && posts) {
     return (
       <div className="flex flex-col items-center justify-center gap-4">
         <h1 className="w-full px-2 py-4 text-4xl font-bold underline">Latest Posts</h1>
@@ -67,11 +94,10 @@ const Home = () => {
         </div>
       </div>
     )
-  } else {
-    return (
-      <div className="w-full h-full">Error Occured</div>
-    )
   }
+
+  return (<></>)
+
 }
 
 export default Home
