@@ -18,7 +18,7 @@ const Home = () => {
   useEffect(() => {
 
     let pageSize = 10
-    let offset = 0
+    let offset = 1
 
     fetchPosts(pageSize, offset).then((posts) => { console.log(posts) })
   }, [])
@@ -26,7 +26,7 @@ const Home = () => {
   // Functions
   const fetchPosts = async (pageSize: number, offset: number) => {
     const res = await fetch(
-      `${process.env.REACT_APP_PUBLIC_URL}/${process.env.REACT_APP_DBNAME}/api/posts?limit=${pageSize}&offset=${offset}`
+      `${process.env.REACT_APP_PUBLIC_URL}/api/posts?limit=${pageSize}&offset=${offset}`
     )
     console.log(res)
     return await res.json();
