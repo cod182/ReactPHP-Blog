@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import { PostProp } from '../../types/types'
 type Props = {
   post: PostProp;
@@ -5,7 +6,7 @@ type Props = {
 
 const Post = ({ post }: Props) => {
   return (
-    <div className='flex flex-col items-start justify-between w-full h-full px-2 bg-blue-400/50 rounded-xl'>
+    <Link to={`/post/${post.id}`} className='flex flex-col items-start justify-between w-full h-full px-2 bg-blue-400/50 rounded-xl'>
       {/* Title */}
       <div className='flex flex-row items-center justify-start py-2 w-fit'>
         <h3 className='text-lg font-semibold'>{post.title}</h3>
@@ -25,7 +26,7 @@ const Post = ({ post }: Props) => {
       <div className='w-full h-fit'>
         <p className='text-sm italic text-gray-600'>Creator ID: {post.user_id}</p>
       </div>
-    </div>
+    </Link>
   )
 }
 

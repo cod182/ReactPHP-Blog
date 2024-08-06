@@ -1,10 +1,8 @@
+import { Loading, Posts } from "../components";
 import { useEffect, useState } from "react"
 
-import ReactPaginate from 'react-paginate';
 import { PostProp } from '../../types/types';
-import { Loading, Posts } from "../components";
-
-
+import ReactPaginate from 'react-paginate';
 
 const Home = () => {
 
@@ -60,7 +58,7 @@ const Home = () => {
     )
   }
 
-  if (fetchError || totalPosts <= 0 || posts) {
+  if (fetchError || totalPosts <= 0 || !posts) {
 
     return (
       <div className="flex flex-col items-center justify-center w-full h-[calc(100svh-80px)]  gap-5 grow">
