@@ -1,5 +1,5 @@
-import { Post } from './'
-import { PostProp } from '../../types/types'
+import Post from "./Post"
+import { PostProp } from "../../../types/types"
 
 type Props = {
   posts: PostProp[]

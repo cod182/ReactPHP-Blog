@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
-import { PostProp } from '../../types/types'
+import { PostProp } from '../../../types/types';
+
 type Props = {
   post: PostProp;
 }
