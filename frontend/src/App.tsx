@@ -39,7 +39,12 @@ function App() {
     e.preventDefault();
     setSearchOpen(false);
 
-    fetchSearchResults(searchTerm).then((posts: PostProp[]) => { setSearchResults(posts); })
+    fetchSearchResults(searchTerm).then((
+      item
+    ) => {
+      setSearchResults(item.posts);
+      console.log(item.posts);
+    })
   }
 
   return (
