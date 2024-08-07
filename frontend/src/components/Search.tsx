@@ -1,28 +1,26 @@
+import { FormEvent, useEffect } from "react";
+
 import { FaSearch } from "react-icons/fa";
 import { IoCloseSharp } from "react-icons/io5";
-import { useEffect } from "react";
 
 type Props = {
   searchOpen: boolean;
   setSearchOpen: (value: boolean) => void;
+  searchTerm: string;
+  setSearchTerm: (value: string) => void;
+  onSubmit: (e: FormEvent) => void
 }
 
-const Search = ({ searchOpen, setSearchOpen }: Props) => {
+const Search = ({ searchOpen, setSearchOpen, searchTerm, setSearchTerm, onSubmit }: Props) => {
 
 
 
 
 
   useEffect(() => {
-
-    const toggleSearchStatus = () => {
-      setSearchOpen(false);
-    };
-
-
     const handleScroll = () => {
       if (searchOpen) {
-        toggleSearchStatus();
+        setSearchOpen(false);
       }
     };
 
@@ -39,8 +37,8 @@ const Search = ({ searchOpen, setSearchOpen }: Props) => {
     <>
       <div className={`overflow-hidden absolute top-[80px] px-4 left-0 w-full flex flex-row justify-center items-center transition-all duration-400 ease-in ${searchOpen ? 'h-[80px] z-[10]' : 'h-[0px] z-[-1]'}`}>
         <div className="w-full sm:w-[75%] lg:w-[50%] max-w-[800px]">
-          <form action="" method="post" className="relative">
-            <input type="text" name="search" id="search" className="w-full h-[60px] rounded-full border-[1px] border-black px-4" placeholder='Search for a post' />
+          <form action="" method="post" className="relative" onSubmit={(e) => onSubmit(e)}>
+            <input type="text" name="search" id="search" className="w-full h-[60px] rounded-full border-[1px] border-black px-4" placeholder='Search for a post' value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} />
             <button
               type="submit"
               className="absolute text-gray-600 transform -translate-y-1/2 right-4 top-1/2 hover:text-primary focus:outline-none"
