@@ -220,11 +220,13 @@ class PostsController
 
   public function getSearchResults()
   {
-
-    // Headers
-    $this->getHeaders();
-
     try {
+      // Set required headers
+      $this->getHeaders();
+
+      // Set content type header for JSON response
+      header('Content-Type: application/json');
+
       // Initialize an array to store the posts
       $postsArray = [];
 
@@ -250,7 +252,9 @@ class PostsController
           }
         } else {
           // Output the error message if the query failed
-          echo "Error: " . $stmt->error;
+          http_response_code(500);
+          echo json_encode(["error" => "Database query failed: " . $stmt->error]);
+          return;
         }
 
         // Close the statement
@@ -263,27 +267,47 @@ class PostsController
       // Output the posts array as JSON
       echo json_encode($postsArray, JSON_PRETTY_PRINT);
     } catch (\Exception $e) {
-      // Handle any exceptions
-      echo "Exception: " . $e->getMessage();
+      // Ensure the connection is closed in case of an exception
+      if ($this->conn) {
+        $this->conn->close();
+      }
+
+      // Handle any exceptions and output error message
+      http_response_code(500);
+      echo json_encode(["error" => "Exception occurred: " . $e->getMessage()]);
     }
   }
+
 
   // Get required Headers
   public function getHeaders()
   {
+    // Allow any origin
     header("Access-Control-Allow-Origin: *");
-    header("Access-Control-Allow-Credentials: true");
-    header('Access-Control-Max-Age: 86400');
-    header('Access-Control-Allow-Methods:GET, POST, PUT,OPTIONS');
 
+    // Allow credentials to be included in the request
+    header("Access-Control-Allow-Credentials: true");
+
+    // Specify how long the results of a preflight request can be cached (in seconds)
+    header('Access-Control-Max-Age: 86400');
+
+    // Specify the methods allowed when accessing the resource
+    header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS');
+
+    // Handle preflight requests
     if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
 
-      if (isset($_SERVER['HTTP_ACCESS_CONTROL_REQUEST_METHOD']))
-        header('Access-Control-Allow-Methods:GET, POST,OPTIONS');
+      // If the request method is allowed
+      if (isset($_SERVER['HTTP_ACCESS_CONTROL_REQUEST_METHOD'])) {
+        header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS');
+      }
 
-      if (isset($_SERVER['HTTP_ACCESS_CONTROL_REQUEST_HEADERS']))
-        header('Access-Control-Allow-Headers: {$_SERVER["HTTP_ACCESS_CONTROL_REQUEST_METHOD"]}');
+      // If there are specific headers requested
+      if (isset($_SERVER['HTTP_ACCESS_CONTROL_REQUEST_HEADERS'])) {
+        header('Access-Control-Allow-Headers: ' . $_SERVER['HTTP_ACCESS_CONTROL_REQUEST_HEADERS']);
+      }
 
+      // Terminate the script and return the headers
       exit(0);
     }
   }

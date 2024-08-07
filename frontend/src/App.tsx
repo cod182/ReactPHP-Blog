@@ -2,7 +2,7 @@ import './App.css';
 
 import { Contact, Error, Home, PostDetail } from './routes';
 import { FormEvent, useState } from 'react';
-import { Nav, Search } from './components';
+import { Nav, Search, SearchResults } from './components';
 import { Route, Routes } from 'react-router-dom';
 
 import { PostProp } from '../types/types';
@@ -13,8 +13,7 @@ function App() {
 
   const [searchOpen, setSearchOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
-  const [searchResults, setSearchResults] = useState<PostProp[]>([])
-
+  const [searchResults, setSearchResults] = useState<PostProp[]>([]);
 
   // FUNCTIONS
 
@@ -29,7 +28,6 @@ function App() {
         }
       }
     )
-
     return await res.json();
 
   }
@@ -37,7 +35,6 @@ function App() {
   // Handles the search being submitted
   const handleSearch = (e: FormEvent) => {
     e.preventDefault();
-    setSearchOpen(false);
 
     fetchSearchResults(searchTerm).then((
       item
@@ -47,12 +44,22 @@ function App() {
     })
   }
 
+
+
   return (
     <>
-      <div>
+      <div className='relative'>
         {/* Nav */}
         <Nav setSearchOpen={setSearchOpen} />
-        <Search searchOpen={searchOpen} setSearchOpen={setSearchOpen} searchTerm={searchTerm} setSearchTerm={setSearchTerm} onSubmit={handleSearch} />
+        <Search searchOpen={searchOpen} setSearchOpen={setSearchOpen} searchTerm={searchTerm} setSearchTerm={setSearchTerm} onSubmit={handleSearch}>
+          {searchResults !== undefined && searchResults.length >= 1 ? (
+            <SearchResults posts={searchResults} handleClick={setSearchOpen} />
+          ) :
+            (<div className='w-full my-4 h-fit'>
+              <p className='font-mono text-2xl text-center front-bold'>No Results Found</p>
+            </div>)
+          }
+        </Search>
       </div>
       <div className={`relative z-[2]  px-2  bg-gray-100`}>
         <div className='mx-auto max-w-[1700px] min-h-[calc(100dvh-80px)]'>
