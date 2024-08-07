@@ -9,5 +9,6 @@ use services\DB;
 require "api/controllers/PostsController.php";
 
 use Api\controllers\PostsController;
+use Api\controllers\PostController;
 
-(new PostsController)->getPosts();
+// (new PostsController)->getPosts();

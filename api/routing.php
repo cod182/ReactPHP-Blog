@@ -11,6 +11,7 @@ use Api\Api;
 
 
 require('controllers/PostsController.php');
+require('controllers/PostController.php');
 require('Api.php');
 
 $config = require 'config.php';
@@ -36,7 +37,9 @@ if (str_contains($current_link, '?')) {
 // Routes
 
 $urls = [
-  '/reactphp-blog/api/posts' => ['PostsController@getPostsFromDatabase']
+  '/reactphp-blog/api/posts' => ['PostsController@getPostsFromDatabase'],
+  '/reactphp-blog/api/post' => ['PostController@getPostFromDatabase']
+
 ];
 
 

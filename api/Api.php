@@ -1,6 +1,5 @@
 <?php
 
-
 namespace Api;
 
 error_reporting(E_ALL);
@@ -28,8 +27,8 @@ class Api
         }
 
         $class = "api\controllers\\$className";
-        $object = new $class();
 
+        $object = new $class();
         $object->$function();
       }
     } catch (\Exception $e) {
