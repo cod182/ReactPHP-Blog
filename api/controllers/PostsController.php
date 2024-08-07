@@ -220,6 +220,10 @@ class PostsController
 
   public function getSearchResults()
   {
+
+    // Headers
+    $this->getHeaders();
+
     try {
       // Initialize an array to store the posts
       $postsArray = [];
@@ -261,6 +265,26 @@ class PostsController
     } catch (\Exception $e) {
       // Handle any exceptions
       echo "Exception: " . $e->getMessage();
+    }
+  }
+
+  // Get required Headers
+  public function getHeaders()
+  {
+    header("Access-Control-Allow-Origin: *");
+    header("Access-Control-Allow-Credentials: true");
+    header('Access-Control-Max-Age: 86400');
+    header('Access-Control-Allow-Methods:GET, POST, PUT,OPTIONS');
+
+    if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
+
+      if (isset($_SERVER['HTTP_ACCESS_CONTROL_REQUEST_METHOD']))
+        header('Access-Control-Allow-Methods:GET, POST,OPTIONS');
+
+      if (isset($_SERVER['HTTP_ACCESS_CONTROL_REQUEST_HEADERS']))
+        header('Access-Control-Allow-Headers: {$_SERVER["HTTP_ACCESS_CONTROL_REQUEST_METHOD"]}');
+
+      exit(0);
     }
   }
 }
