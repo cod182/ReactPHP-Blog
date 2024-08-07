@@ -18,10 +18,28 @@ function App() {
 
   // FUNCTIONS
 
+  // Get the search results
+  const fetchSearchResults = async (searchTerm: string) => {
+    const res = await fetch(`${process.env.REACT_APP_PUBLIC_URL}/api/search?keyword=${searchTerm}`,
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          "Access-Control-Allow-Origin": "*"
+        }
+      }
+    )
+
+    return await res.json();
+
+  }
+
+  // Handles the search being submitted
   const handleSearch = (e: FormEvent) => {
     e.preventDefault();
     setSearchOpen(false);
-    console.log(searchTerm);
+
+    fetchSearchResults(searchTerm).then((posts: PostProp[]) => { setSearchResults(posts); })
   }
 
   return (
