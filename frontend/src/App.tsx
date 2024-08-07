@@ -11,15 +11,15 @@ function App() {
       {/* Nav */}
       <Nav
       />
-      <div className={`relative z-[2]`}>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/post/:id" element={<PostDetail />} />
-          <Route path="/contact" element={<Contact />} />
-          <Route path="*" element={<Error />} />
-
-
-        </Routes>
+      <div className={`relative z-[2]  px-2  bg-gray-100`}>
+        <div className='mx-auto max-w-7xl'>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/post/:id" element={<PostDetail />} />
+            <Route path="/contact" element={<Contact />} />
+            <Route path="*" element={<Error />} />
+          </Routes>
+        </div>
       </div>
       {/* FOOTER */}
     </>
