@@ -1,16 +1,22 @@
 import './App.css';
 
 import { Contact, Error, Home, PostDetail } from './routes';
+import { Nav, Search } from './components';
 import { Route, Routes } from 'react-router-dom';
 
-import { Nav } from './components';
+import { useState } from 'react';
 
 function App() {
+
+  const [searchOpen, setSearchOpen] = useState(false);
+
   return (
     <>
-      {/* Nav */}
-      <Nav
-      />
+      <div>
+        {/* Nav */}
+        <Nav setSearchOpen={setSearchOpen} />
+        <Search searchOpen={searchOpen} setSearchOpen={setSearchOpen} />
+      </div>
       <div className={`relative z-[2]  px-2  bg-gray-100`}>
         <div className='mx-auto max-w-[1700px] min-h-[calc(100dvh-80px)]'>
           <Routes>
