@@ -12,7 +12,7 @@ function App() {
       <Nav
       />
       <div className={`relative z-[2]  px-2  bg-gray-100`}>
-        <div className='mx-auto max-w-7xl'>
+        <div className='mx-auto max-w-[1700px] h-[calc(100dvh-80px)]'>
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/post/:id" element={<PostDetail />} />
