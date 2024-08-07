@@ -8,8 +8,8 @@ const Post = ({ post }: Props) => {
   return (
     <Link to={`/post/${post.id}`} className='relative flex flex-col items-start justify-between w-full h-full min-h-[300px] p-4 overflow-hidden transition-all duration-200 group rounded-xl ease hover:scale-105 shadow-[1px_1px_2px_2px_rgba(0,0,0,0.1)] hover:'>
       {/* Overlay */}
-      <div className='z-[2] group-hover:h-full h-[0%] w-full bg-gray-600/60  absolute top-0 left-0 transition-all duration-400 ease flex flex-col justify-center items-center overflow-hidden backdrop-blur-sm	'>
-        <p className='text-2xl font-bold text-white'>View Post</p>
+      <div className='z-[-1] group-hover:bg-gray-300/60 group-hover:z-[2] h-full w-full  absolute top-0 left-0 transition-all duration-600 ease flex flex-col justify-center items-center overflow-hidden backdrop-blur-sm	'>
+        <p className='font-mono text-xl font-bold text-black transition-all duration-200 sm:text-4xl w-fit h-fit ease'>View Post</p>
       </div>
 
       {/* Title */}

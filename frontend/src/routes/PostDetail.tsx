@@ -69,14 +69,14 @@ const PostDetail = () => {
       {/* Right */}
       <div className='flex flex-col items-center justify-start w-full h-full px-2 gap-y-10 md:justify-center'>
         {/* title */}
-        <div className='my-4'>
-          <h2 className='text-xl font-bold underline sm:text-2xl md:text-3xl'>{post.title}</h2>
+        <div className='w-full my-4'>
+          <h2 className='font-mono text-xl font-extrabold underline uppercase text-start sm:text-2xl md:text-3xl'>{post.title}</h2>
         </div>
 
         {/* Content */}
-        <div className='p-2 my-4 bg-gray-500 rounded-xl h-fit md:min-h-[30%]'>
-          <div className='h-full p-2 bg-gray-100 rounded-lg'>
-            <p className='uppercase'>{post.content}</p>
+        <div className='p-2 my-4 bg-gray-500 rounded-xl h-fit '>
+          <div className='p-2 overflow-scroll bg-gray-100 rounded-lg h-fit'>
+            <p className='text-xl uppercase '>{post.content}</p>
           </div>
         </div>
 
